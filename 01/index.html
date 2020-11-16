@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <title>01 - Just save a model, any model</title>
     <link href="styles.css" rel="stylesheet" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
+    <link rel="icon" href="../favicon.ico">
 
     <!-- Load TensorFlow.js -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js"> </script>
@@ -31,6 +33,14 @@
         // Open the browser devtools to see the output
         model.predict(tf.tensor2d([5], [1, 1])).print();
       });
+
+      (async function saveAndLoadModel() {
+        const saveResults = await model.save('localstorage://my-model-1');
+
+        const loadedModel = await tf.loadLayersModel('localstorage://my-model-1');
+        console.log('Prediction from loaded model:');
+        loadedModel.predict(tf.ones([1, 1])).print();
+      }());
     </script>
   </head>
   <body>
